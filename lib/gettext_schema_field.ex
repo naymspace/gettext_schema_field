@@ -5,7 +5,7 @@ defmodule GettextSchemaField do
   """
 
   @doc """
-  Returns the translation of the field. If the msgstr is missing 
+  Returns the translation of the field. If the msgstr is missing
   in the PO file, the original field is returned
   """
   def translate_schema_field(gettext_module, changeset, field) do
@@ -21,7 +21,8 @@ defmodule GettextSchemaField do
   defp sanitized_module_name(module_name), do: module_name
 
   defp schema_fields_domain do
-    Application.get_env(Mix.Project.config()[:app], :gettext_schema_file_name) || "schema"
+    {:ok, app_name} = :application.get_application(__MODULE__)
+    Application.get_env(app_name, :gettext_schema_file_name) || "schema"
   end
 
   # If the msgstr and the msgid are the same, assume that the translation is missing
